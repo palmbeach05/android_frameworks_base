@@ -178,11 +178,11 @@ public class ImageWallpaper extends WallpaperService {
                 if (DEBUG) {
                     Log.d(TAG, "trimMemory");
                 }
+                mWallpaperManager.forgetLoadedWallpaper();
                 mBackground.recycle();
                 mBackground = null;
                 mBackgroundWidth = -1;
                 mBackgroundHeight = -1;
-                mWallpaperManager.forgetLoadedWallpaper();
             }
         }
 
@@ -436,8 +436,8 @@ public class ImageWallpaper extends WallpaperService {
                     // position it appropriately.  As such, we no longer needed
                     // the loaded bitmap.  Yay!
                     // hw-accelerated path retains bitmap for faster rotation
-                    mBackground = null;
                     mWallpaperManager.forgetLoadedWallpaper();
+                    mBackground = null;
                 }
             }
 
