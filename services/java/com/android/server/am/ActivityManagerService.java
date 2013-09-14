@@ -4704,6 +4704,17 @@ public final class ActivityManagerService  extends ActivityManagerNative
         }
     }
 
+    public String getCallingPackageForBroadcast(boolean foreground) {
+        BroadcastQueue queue = foreground ? mFgBroadcastQueue : mBgBroadcastQueue;
+        BroadcastRecord r = queue.getProcessingBroadcast();
+        if (r != null) {
+            return r.callerPackage;
+        } else {
+            Log.e(TAG, "Broadcast sender is only retrievable in the onReceive");
+        }
+        return null;
+    }
+
     private ActivityRecord getCallingRecordLocked(IBinder token) {
         ActivityRecord r = mMainStack.isInStackLocked(token);
         if (r == null) {
@@ -6017,7 +6028,11 @@ public final class ActivityManagerService  extends ActivityManagerNative
                     }
                     
                     res.add(rti);
-                    maxNum--;
+                    if ((tr.intent.getFlags() & Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS) == 0
+                            || (flags & ActivityManager.RECENT_DO_NOT_COUNT_EXCLUDED) == 0
+                            || i == 0) {
+                        maxNum--;
+                    }
                 }
             }
             return res;

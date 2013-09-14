@@ -520,7 +520,7 @@
     <string name="permlab_modifyPhoneState" msgid="8423923777659292228">"telefoonstatus wijzigen"</string>
     <string name="permdesc_modifyPhoneState" msgid="1029877529007686732">"Hiermee kan de app de telefoonfuncties van het apparaat beheren. Een app met deze toestemming kan schakelen tussen netwerken, kan de radio van de telefoon in- en uitschakelen en dergelijke acties uitvoeren zonder dat u hiervan op de hoogte wordt gesteld."</string>
     <string name="permlab_readPhoneState" msgid="9178228524507610486">"telefoonstatus en -identiteit lezen"</string>
-    <string name="permdesc_readPhoneState" msgid="1639212771826125528">"Hiermee kan de app toegang krijgen tot de telefoonfuncties van het apparaat, Met deze toestemming kan de app het telefoonnummer en de apparaat-ID\'s bepalen, of een oproep actief is, en het andere telefoonnummer waarmee wordt gebeld."</string>
+    <string name="permdesc_readPhoneState" msgid="1639212771826125528">"Hiermee kan de app toegang krijgen tot de telefoonfuncties van het apparaat. Met deze toestemming kan de app het telefoonnummer en de apparaat-ID\'s bepalen, of een oproep actief is, en het andere telefoonnummer waarmee wordt gebeld."</string>
     <string name="permlab_wakeLock" product="tablet" msgid="1531731435011495015">"voorkomen dat tablet overschakelt naar slaapmodus"</string>
     <string name="permlab_wakeLock" product="default" msgid="573480187941496130">"voorkomen dat telefoon overschakelt naar slaapmodus"</string>
     <string name="permdesc_wakeLock" product="tablet" msgid="7311319824400447868">"Hiermee kan de app voorkomen dat de tablet overschakelt naar de slaapmodus."</string>
@@ -789,7 +789,7 @@
     <string name="lockscreen_plugged_in" msgid="8057762828355572315">"Opladen, <xliff:g id="NUMBER">%d</xliff:g><xliff:g id="PERCENT">%%</xliff:g>"</string>
     <string name="lockscreen_charged" msgid="321635745684060624">"Opgeladen"</string>
     <string name="lockscreen_battery_short" msgid="4477264849386850266">"<xliff:g id="NUMBER">%d</xliff:g><xliff:g id="PERCENT">%%</xliff:g>"</string>
-    <string name="lockscreen_low_battery" msgid="1482873981919249740">"Sluit de oplader aan."</string>
+    <string name="lockscreen_low_battery" msgid="1482873981919249740">"Sluit de oplader aan, <xliff:g id="number">%d</xliff:g><xliff:g id="percent">%%</xliff:g>"</string>
     <string name="lockscreen_missing_sim_message_short" msgid="5099439277819215399">"Geen simkaart"</string>
     <string name="lockscreen_missing_sim_message" product="tablet" msgid="151659196095791474">"Geen SIM-kaart in tablet."</string>
     <string name="lockscreen_missing_sim_message" product="default" msgid="2186920585695169078">"Geen SIM-kaart in telefoon."</string>
