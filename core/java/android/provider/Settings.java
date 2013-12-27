@@ -1025,6 +1025,9 @@ public final class Settings {
             MOVED_TO_SECURE.add(Secure.LOCK_PATTERN_ENABLED);
             MOVED_TO_SECURE.add(Secure.LOCK_PATTERN_VISIBLE);
             MOVED_TO_SECURE.add(Secure.LOCK_PATTERN_TACTILE_FEEDBACK_ENABLED);
+            MOVED_TO_SECURE.add(Secure.LOCK_PATTERN_SIZE);
+            MOVED_TO_SECURE.add(Secure.LOCK_DOTS_VISIBLE);
+            MOVED_TO_SECURE.add(Secure.LOCK_SHOW_ERROR_PATH);
             MOVED_TO_SECURE.add(Secure.LOGGING_ID);
             MOVED_TO_SECURE.add(Secure.PARENTAL_CONTROL_ENABLED);
             MOVED_TO_SECURE.add(Secure.PARENTAL_CONTROL_LAST_UPDATE);
@@ -2787,6 +2790,13 @@ public final class Settings {
          *
          * @hide
          */
+        public static final String QS_DYNAMIC_DOCK_BATTERY = "qs_dyanmic_dock_battery";
+
+        /**
+         * Quick Settings Panel Dynamic Tiles
+         *
+         * @hide
+         */
         public static final String QS_DYNAMIC_WIFI = "qs_dyanmic_wifi";
 
         /**
@@ -2915,15 +2925,22 @@ public final class Settings {
 
         /**
          * Display style of the status bar battery information
-         * 0: Display the stock battery information
-         * 1: Display cm battery percentage implementation / dont show stock icon
-         * 2: Display cm circle battery implementation without percentage
-         * 3: Display cm circle battery implementation with percentage
-         * 4: Hide the battery information
+         * 0: Display the battery an icon in portrait mode
+         * 2: Display the battery as a circle
+         * 4: Hide the battery status information
+         * 5: Display the battery an icon  in landscape mode
          * default: 0
          * @hide
          */
         public static final String STATUS_BAR_BATTERY = "status_bar_battery";
+
+        /**
+         * Display percentage in text of the battery level on the status bar
+         * default: 0
+         * @hide
+         */
+        public static final String STATUS_BAR_BATTERY_SHOW_PERCENT =
+                "status_bar_battery_show_percent";
 
         /**
          * Whether to show the clock in status bar
@@ -3338,19 +3355,23 @@ public final class Settings {
          public static final String KEY_APP_SWITCH_LONG_PRESS_ACTION = "key_app_switch_long_press_action";
 
         /**
-         * Control the display of the action overflow button within app UI.
-         * 0 = use system default
-         * 1 = force on
-         * @hide
-         */
-        public static final String UI_FORCE_OVERFLOW_BUTTON = "ui_force_overflow_button";
-
-        /**
          * Performance profile
          * @see config_perf_profile_prop in frameworks/base/core/res/res/values/config.xml
          * @hide
          */
         public static final String PERFORMANCE_PROFILE = "performance_profile";
+
+        /**
+         * Whether to unlock the screen with the home key.  The value is boolean (1 or 0).
+         * @hide
+         */
+        public static final String HOME_UNLOCK_SCREEN = "home_unlock_screen";
+
+        /**
+         * Whether the lockscreen vibrate should be enabled.
+         * @hide
+         */
+        public static final String LOCKSCREEN_VIBRATE_ENABLED = "lockscreen.vibrate_enabled";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -3442,6 +3463,7 @@ public final class Settings {
             POWER_MENU_AIRPLANE_ENABLED,
             POWER_MENU_SOUND_ENABLED,
             POWER_MENU_USER_ENABLED,
+            LOCKSCREEN_VIBRATE_ENABLED,
             PHONE_BLACKLIST_ENABLED,
             PHONE_BLACKLIST_NOTIFY_ENABLED,
             PHONE_BLACKLIST_PRIVATE_NUMBER_MODE,
@@ -3712,6 +3734,9 @@ public final class Settings {
             MOVED_TO_LOCK_SETTINGS.add(Secure.LOCK_PATTERN_ENABLED);
             MOVED_TO_LOCK_SETTINGS.add(Secure.LOCK_PATTERN_VISIBLE);
             MOVED_TO_LOCK_SETTINGS.add(Secure.LOCK_PATTERN_TACTILE_FEEDBACK_ENABLED);
+            MOVED_TO_LOCK_SETTINGS.add(Secure.LOCK_PATTERN_SIZE);
+            MOVED_TO_LOCK_SETTINGS.add(Secure.LOCK_DOTS_VISIBLE);
+            MOVED_TO_LOCK_SETTINGS.add(Secure.LOCK_SHOW_ERROR_PATH);
 
             MOVED_TO_GLOBAL = new HashSet<String>();
             MOVED_TO_GLOBAL.add(Settings.Global.ADB_ENABLED);
@@ -4405,6 +4430,24 @@ public final class Settings {
                 LOCK_PATTERN_TACTILE_FEEDBACK_ENABLED = "lock_pattern_tactile_feedback_enabled";
 
         /**
+         * Determines the width and height of the LockPatternView widget
+         * @hide
+         */
+        public static final String LOCK_PATTERN_SIZE = "lock_pattern_size";
+
+        /**
+         * Whether lock pattern will show dots (0 = false, 1 = true)
+         * @hide
+         */
+        public static final String LOCK_DOTS_VISIBLE = "lock_pattern_dotsvisible";
+
+        /**
+         * Whether lockscreen error pattern is visible (0 = false, 1 = true)
+         * @hide
+         */
+        public static final String LOCK_SHOW_ERROR_PATH = "lock_pattern_show_error_path";
+
+        /**
          * This preference allows the device to be locked given time after screen goes off,
          * subject to current DeviceAdmin policy limits.
          * @hide
@@ -4455,6 +4498,7 @@ public final class Settings {
          */
         public static final String LOCK_BEFORE_UNLOCK =
             "lock_before_unlock";
+
         /**
          * The Logging ID (a unique 64-bit value) as a hex string.
          * Used as a pseudonymous identifier for logging.
