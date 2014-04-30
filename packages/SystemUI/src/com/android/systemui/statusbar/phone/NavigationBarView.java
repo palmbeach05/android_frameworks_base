@@ -107,6 +107,9 @@ public class NavigationBarView extends LinearLayout {
     private DeadZone mDeadZone;
     private final NavigationBarTransitions mBarTransitions;
 
+    private boolean mModLockDisabled = true;
+    private SettingsObserver mObserver;
+
     // workaround for LayoutTransitions leaving the nav buttons in a weird state (bug 5549288)
     final static boolean WORKAROUND_INVALID_LAYOUT = true;
     final static int MSG_CHECK_INVALID_LAYOUT = 8686;
@@ -116,9 +119,6 @@ public class NavigationBarView extends LinearLayout {
 
     // performs manual animation in sync with layout transitions
     private final NavTransitionListener mTransitionListener = new NavTransitionListener();
-
-    private boolean mModLockDisabled = true;
-    private SettingsObserver mObserver;
 
     private class NavTransitionListener implements TransitionListener {
         private boolean mBackTransitioning;
@@ -370,6 +370,7 @@ public class NavigationBarView extends LinearLayout {
             ViewGroup container = (ViewGroup) mRotatedViews[i];
             if (container != null) {
                 updateKeyButtonViewResources(container);
+                updateLightsOutResources(container);
             }
         }
     }
@@ -377,17 +378,39 @@ public class NavigationBarView extends LinearLayout {
     private void updateKeyButtonViewResources(ViewGroup container) {
         ViewGroup midNavButtons = (ViewGroup) container.findViewById(R.id.mid_nav_buttons);
         if (midNavButtons != null) {
-            final int nChildern = midNavButtons.getChildCount();
-            for (int i = 0; i < nChildern; i++) {
+            final int nChildren = midNavButtons.getChildCount();
+            for (int i = 0; i < nChildren; i++) {
                 final View child = midNavButtons.getChildAt(i);
                 if (child instanceof KeyButtonView) {
                     ((KeyButtonView) child).updateResources();
                 }
             }
         }
-        KeyButtonView kbv = (KeyButtonView) findViewById(R.id.six);
+        KeyButtonView kbv = (KeyButtonView) findViewById(R.id.one);
         if (kbv != null) {
             kbv.updateResources();
+        }
+        kbv = (KeyButtonView) findViewById(R.id.six);
+        if (kbv != null) {
+            kbv.updateResources();
+        }
+    }
+
+    private void updateLightsOutResources(ViewGroup container) {
+        ViewGroup lightsOut = (ViewGroup) container.findViewById(R.id.lights_out);
+        if (lightsOut != null) {
+            final int nChildren = lightsOut.getChildCount();
+            for (int i = 0; i < nChildren; i++) {
+                final View child = lightsOut.getChildAt(i);
+                if (child instanceof ImageView) {
+                    final ImageView iv = (ImageView) child;
+                    // clear out the existing drawable, this is required since the
+                    // ImageView keeps track of the resource ID and if it is the same
+                    // it will not update the drawable.
+                    iv.setImageDrawable(null);
+                    iv.setImageResource(R.drawable.ic_sysbar_lights_out_dot_large);
+                }
+            }
         }
     }
 
@@ -513,8 +536,8 @@ public class NavigationBarView extends LinearLayout {
         final boolean showCamera = showSearch && !mCameraDisabledByDpm
                 && mLockUtils.getCameraEnabled();
 
-        setVisibleOrGone(getSearchLight(), showSearch);
-        setVisibleOrGone(getCameraButton(), showCamera && mModLockDisabled);
+        setVisibleOrGone(getSearchLight(), showSearch && mModLockDisabled);
+        setVisibleOrGone(getCameraButton(), showCamera);
 
         mBarTransitions.applyBackButtonQuiescentAlpha(mBarTransitions.getMode(), true /*animate*/);
     }
@@ -585,11 +608,11 @@ public class NavigationBarView extends LinearLayout {
         super.onAttachedToWindow();
 
         final Bundle keyguard_metadata = NavigationBarView
-                    .getApplicationMetadata(mContext, "com.android.keyguard");
-                if (null != keyguard_metadata &&
-                    keyguard_metadata.getBoolean("com.cyanogenmod.keyguard", false)) {
-                        mObserver.observe();
-                }
+                .getApplicationMetadata(mContext, "com.android.keyguard");
+        if (null != keyguard_metadata &&
+                keyguard_metadata.getBoolean("com.cyanogenmod.keyguard", false)) {
+            mObserver.observe();
+        }
     }
 
     @Override
