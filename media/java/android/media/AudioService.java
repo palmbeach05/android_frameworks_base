@@ -4405,7 +4405,7 @@ public class AudioService extends IAudioService.Stub {
                         0,
                         null,
                         SAFE_VOLUME_CONFIGURE_TIMEOUT_MS);
-                adjustCurrentStreamVolume();
+                applyCurrentStreamVolume();
             } else if (action.equals(ACTION_FM_STATE_CHANGED)) {
                 mFmActive = intent.getBooleanExtra("active", false);
             } else if (action.equals(Intent.ACTION_SCREEN_ON)) {
